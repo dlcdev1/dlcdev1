@@ -39,7 +39,9 @@ public class ProgramEmployeerList {
 		System.out.print("Enter the employee id that will have salary increase: ");
 		int idSalary = sc.nextInt();
 		
-		EmployeerList emp = employeeList.stream().filter(x -> x.getId() == idSalary).findFirst().orElse(null);
+		EmployeerList emp = employeeList.stream().filter(
+				x -> x.getId() == idSalary
+				).findFirst().orElse(null);
 
 		
 		if (emp == null) {
@@ -58,7 +60,6 @@ public class ProgramEmployeerList {
 		}
 
 		sc.close();
-
 	}
 
 }
