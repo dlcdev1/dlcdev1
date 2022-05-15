@@ -5,23 +5,31 @@ import java.util.List;
 import java.util.Scanner;
 
 import entities.KingSort;
+import entities.Kings;
 
 public class Program {
 
 	public static void main(String[] args) {
-		
-		String regex = "[a-z]";
+
 		Scanner sc = new Scanner(System.in);
-		List<KingSort> kings = new ArrayList<>();
+		List<String> kings_sort = new ArrayList<>();
+		Kings king = new Kings();
 
-		System.out.println("Enter the names of kings: ");
-		String kings_name = sc.nextLine();
-		String[] change = kings_name.split(regex);
-		
+		System.out.print("Enter quantity of kings: ");
+		String quantity_kings = sc.nextLine();
 
-		for (String king : change) {
-			System.out.println(king);
+		for (int i = 0; i <= quantity_kings.length(); i++) {
+			System.out.println(String.format("Enter the names of %s kings: ", i+1));
+			String kings_name = sc.nextLine();
+			king.setName(kings_name);
+			kings_sort.add(kings_name);
 		}
+		
+		for (String string : kings_sort) {
+			System.out.println("Este é um rei:" + string);
+		}
+
+//		System.out.println(kings_name.replaceAll(regex, ""));
 
 		sc.close();
 	}
