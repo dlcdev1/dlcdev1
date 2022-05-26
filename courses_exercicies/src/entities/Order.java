@@ -1,5 +1,6 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,60 +8,84 @@ import java.util.List;
 import entities.enums.OrderStatus;
 
 public class Order {
+
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
 	
-	private Date date;
-	private OrderStatus order_status;
-	private List<OrderItem> order_items = new ArrayList<>();
-	private List<Client> client = new ArrayList<>();
+	private Date moment;
+	private OrderStatus status;
+	
+	private Client client;
+	
+	private List<OrderItem> items = new ArrayList<OrderItem>();
 	
 	public Order() {
+	
 	}
 
-	public Order(Date date, OrderStatus order_status) {
-		this.date = date;
-		this.order_status = order_status;
+	public Order(Date moment, OrderStatus order_status, Client client) {
+		this.moment = moment;
+		this.status = order_status;
+		this.client = client;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getMoment() {
+		return moment;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setMoment(Date moment) {
+		this.moment = moment;
 	}
 
 	public OrderStatus getOrder_status() {
-		return order_status;
+		return status;
 	}
 
 	public void setOrder_status(OrderStatus order_status) {
-		this.order_status = order_status;
+		this.status = order_status;
 	}
 
-	public List<OrderItem> getOrder_item() {
-		return order_items;
-	}
-
-	public List<Client> getClient() {
+	public Client getClient() {
 		return client;
 	}
-	
-	public void addItem(OrderItem order_item) {
-		order_items.add(order_item);
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public void addItem(OrderItem item) {
+		items.add(item);
 	}
 	
-	public void removeItem(OrderItem order_item) {
-		order_items.remove(order_item);
+	public void removeItem(OrderItem item) {
+		items.remove(item);
 	}
 	
+	public double total() {
+		double sum = 0.0;
+		for(OrderItem it: items) {
+			sum += it.subTotal();
+		}
+		return sum;
+	}
 	
+	@Override
 	public String toString() {
-		StringBuilder stb = new StringBuilder();
-		return "";
+		StringBuilder sb = new StringBuilder();
+		sb.append("Order moment: ");
+		sb.append(sdf.format(moment) + "\n");
+		sb.append("Order status: ");
+		sb.append(status + "/n");
+		sb.append("Client: ");
+		sb.append(client  + "\n");
+		sb.append("Order itmes:\n");
+		for (OrderItem item: items) {
+			sb.append(item + "\n");
+		}
+		sb.append("Total price: $");
+		sb.append(String.format("%.2f", total()));
+		return sb.toString();
+		
+		
 	}
-	
-	
-	
-	
 
 }	

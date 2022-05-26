@@ -1,8 +1,11 @@
 package entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Client {
+	
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
 	
 	private String name;
 	private String email;
@@ -48,6 +51,11 @@ public class Client {
 
 	public void setBithDate(Date bithDate) {
 		this.bithDate = bithDate;
+	}
+	
+	@Override
+	public String toString() {
+		return name + "(" + sdf.format(bithDate) + ") - " + email;
 	}
 	
 	
