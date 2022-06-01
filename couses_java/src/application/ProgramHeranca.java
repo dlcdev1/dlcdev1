@@ -34,18 +34,26 @@ public class ProgramHeranca {
 //			System.out.println("update!");
 //		}
 		
-		AccountHeranca acc1 = new AccountHeranca(1001, "Alex", 1000.0);
-		acc1.withdraw(200.0);
-		System.out.println(acc1.getBalance());
+//		AccountHeranca acc1 = new AccountHeranca(1001, "Alex", 1000.0);
+//		acc1.withdraw(200.0);
+//		System.out.println(acc1.getBalance());
+//		
+//		AccountHeranca acc2 = new SavingsAccountHerancaUpDCasting(1002, "Maria", 1000.0, 0.01);
+//		acc2.withdraw(200.0);
+//		System.out.println(acc2.getBalance());
+//		
+//		AccountHeranca acc3 = new BusinessAccountHeranca(1002, "Bob", 1000.0, 500.0);
+//		acc3.withdraw(200.0);
+//		System.out.println(acc3.getBalance());
 		
-		AccountHeranca acc2 = new SavingsAccountHerancaUpDCasting(1002, "Maria", 1000.0, 0.01);
-		acc2.withdraw(200.0);
-		System.out.println(acc2.getBalance());
+		AccountHeranca x = new AccountHeranca(1020, "Alex", 1000.0);
+		AccountHeranca y = new SavingsAccountHerancaUpDCasting(1023, "Maria", 1000.0, 0.01);
 		
-		AccountHeranca acc3 = new BusinessAccountHeranca(1002, "Bob", 1000.0, 500.0);
-		acc3.withdraw(200.0);
-		System.out.println(acc3.getBalance());
+		x.withdraw(50.0);
+		y.withdraw(50.0);
 		
+		System.out.println(x.getBalance());
+		System.out.println(y.getBalance());
 	}
 
 }
