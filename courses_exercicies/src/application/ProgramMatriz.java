@@ -2,7 +2,6 @@ package application;
 
 import java.util.Scanner;
 
-import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 
 public class ProgramMatriz {
 
