@@ -8,11 +8,15 @@ import java.util.Scanner;
 import model.entities.Reservation;
 
 public class ProgramException1 {
-
 	public static void main(String[] args) throws ParseException {
 		
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		String nome = "";
+		
+		
+		
 		
 		System.out.print("Room number: ");
 		int number = sc.nextInt();
