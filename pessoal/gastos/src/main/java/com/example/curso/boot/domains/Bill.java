@@ -1,9 +1,10 @@
 package com.example.curso.boot.domains;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Bill extends AbstractEntity <Long>{
-
-    @Column(nullable = false, unique = true)
-    private String name;
+public class Bill extends AbstractEntity<Long> {
 
     @Column(nullable = false)
     private BigDecimal value;
@@ -33,8 +31,14 @@ public class Bill extends AbstractEntity <Long>{
     @Column
     private Boolean paidOut = false;
 
-    @ManyToMany(mappedBy = "bill")
-    @JsonIgnoreProperties("bills")
+    @OneToMany(mappedBy = "bill")
     private Set<Debtor> debtors;
 
+    @ManyToOne
+    @JoinColumn(name = "idBillCollector")
+    private BillCollector billCollector;
+
+    @ManyToOne
+    @JoinColumn(name = "idBillTimeSource")
+    private TimeSource timeSource;
 }

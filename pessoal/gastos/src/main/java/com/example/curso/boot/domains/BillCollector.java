@@ -2,8 +2,6 @@ package com.example.curso.boot.domains;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -14,20 +12,20 @@ import java.util.Set;
 
 @Entity
 @SuppressWarnings("serial")
-@Table(name = "TIME_SOURCE")
+@Table(name = "BILL_COLLECTORS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TimeSource extends AbstractEntity<Long> {
+public class BillCollector extends AbstractEntity<Long> {
 
-    @Column(nullable = false, length = 3)
-    @Enumerated(EnumType.STRING)
-    private MES mes;
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    @Column(nullable = false, length = 4)
-    private Integer Year;
+    private String typeService;
 
-    @OneToMany(mappedBy = "timeSource")
+    private String site;
+
+    @OneToMany(mappedBy = "billCollector")
     private Set<Bill> bills;
 
 }
