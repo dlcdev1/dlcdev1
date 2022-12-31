@@ -38,20 +38,22 @@ public class BillCollectorController {
 
     @GetMapping("/editar/{id}")
     public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-        BillCollector billCollector = service.findById(id);
-        model.addAttribute("billCollector", billCollector);
+        model.addAttribute("billCollector", service.findById(id));
+
         return "/collector/cadastro";
     }
 
     @PostMapping("/editar")
     public String editar(BillCollector billCollector) {
         service.update(billCollector);
+
         return "redirect:/collectors/listar";
     }
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model) {
         service.delete(id);
+
         return listar(model);
     }
 

@@ -107,8 +107,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="collec : ${billCollector}">
-                <td th:text="${collec.id}">2</td>
+            <tr th:each="collec, idex: ${billCollector}">
+                <td th:text="${idex.count}">2</td>
                 <td th:text="${collec.name}">Nome</td>
                 <td th:text="${collec.typeService}">Categoria</td>
                 <td th:text="${collec.site}">www.google.com.br</td>
