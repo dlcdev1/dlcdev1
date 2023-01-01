@@ -2,6 +2,7 @@ package com.example.curso.boot.web.controller;
 
 import com.example.curso.boot.domains.BillCollector;
 import com.example.curso.boot.services.BillCollectorService;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class BillCollectorController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(BillCollector billCollector, ModelMap model) {
+    public String salvar(BillCollector billCollector, ModelMap model) throws NotFoundException {
         service.save(billCollector);
         return listar(model);
     }
@@ -51,9 +52,8 @@ public class BillCollectorController {
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable("id") Long id, ModelMap model) {
+    public String excluir(@PathVariable("id") Long id, ModelMap model) throws NotFoundException {
         service.delete(id);
-
         return listar(model);
     }
 
