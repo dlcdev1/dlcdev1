@@ -2,24 +2,19 @@ package com.example.curso.boot.services;
 
 import com.example.curso.boot.domains.BillCollector;
 import com.example.curso.boot.repositories.BillCollectorsRepository;
-import javassist.NotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class BillCollectorServiceImpl implements BillCollectorService {
     private final BillCollectorsRepository repo;
 
-    public BillCollectorServiceImpl(BillCollectorsRepository repo) {
-        this.repo = repo;
-    }
-
-    public BillCollector save(final BillCollector billCollector){
+    public BillCollector add(final BillCollector billCollector){
         log.info("Bill collector {}", billCollector);
         return repo.save(billCollector);
     }

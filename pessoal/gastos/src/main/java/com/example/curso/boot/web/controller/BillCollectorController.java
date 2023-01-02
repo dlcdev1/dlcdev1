@@ -2,10 +2,8 @@ package com.example.curso.boot.web.controller;
 
 import com.example.curso.boot.domains.BillCollector;
 import com.example.curso.boot.services.BillCollectorService;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +39,7 @@ public class BillCollectorController {
         if (!Objects.isNull(service.findByName(billCollector.getName()))) {
             attr.addFlashAttribute("fail", String.format("Cobrador '%s' ja existe.", billCollector.getName()));
         } else {
-            service.save(billCollector);
+            service.add(billCollector);
             attr.addFlashAttribute("success", "Cobrador cadastrado com sucesso.");
         }
         return "redirect:/collectors/listar";

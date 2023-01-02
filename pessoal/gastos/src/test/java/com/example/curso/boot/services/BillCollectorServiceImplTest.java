@@ -2,40 +2,50 @@ package com.example.curso.boot.services;
 
 import com.example.curso.boot.domains.BillCollector;
 import com.example.curso.boot.repositories.BillCollectorsRepository;
-import javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-@SpringBootTest
+
+
+@ExtendWith(MockitoExtension.class)
 class BillCollectorServiceImplTest {
 
-    @Autowired
+    @Mock
     private BillCollectorsRepository repository;
 
-    @Mock
-    private BillCollectorService billCollectorService;
+    @InjectMocks
+    private BillCollectorServiceImpl service;
+
 
     @Test
-    void save() throws NotFoundException {
+    void testAddNewBillCollertor() {
+
         BillCollector billCollector = BillCollector.builder()
+                .name("Cemig")
+                .typeService("Eletrico")
+                .build();
+
+        BillCollector billCollectorMock = BillCollector.builder()
                 .id(1L)
                 .name("Cemig")
                 .typeService("Eletrico")
                 .build();
 
 
-        when(repository.save(any())).thenReturn(billCollector);
-        BillCollector save = billCollectorService.save(billCollector);
+        when(repository.save(any(BillCollector.class))).thenReturn(billCollectorMock);
 
-        assertNotNull(save);
+        final var result = service.add(billCollector);
 
+        assertEquals(1L, result.getId());
+        assertEquals(result.getName(), billCollector.getName());
+        assertNotNull(result);
 
     }
 
