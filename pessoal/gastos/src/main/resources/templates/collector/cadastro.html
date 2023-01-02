@@ -23,6 +23,9 @@
 	        </div>
 
 	        <div class="container" id="cadastro">
+
+				<div th:replace="fragments/alert"></div>
+
 	            <form th:action="${billCollector.id == null} ? @{/collectors/salvar} : @{/collectors/editar}"
 					  th:object="${billCollector}" method="POST">
 	                <div class="form-row">

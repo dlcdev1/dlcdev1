@@ -5,6 +5,7 @@ import com.example.curso.boot.repositories.BillCollectorsRepository;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,12 +19,9 @@ public class BillCollectorServiceImpl implements BillCollectorService {
         this.repo = repo;
     }
 
-    public BillCollector save(final BillCollector billCollector) throws NotFoundException {
+    public BillCollector save(final BillCollector billCollector){
         log.info("Bill collector {}", billCollector);
-        if (Objects.isNull(repo.findByName(billCollector.getName()))) {
-            return repo.save(billCollector);
-        }
-        throw new NotFoundException(String.format("Usuario '%s' ja existe.", billCollector.getName()));
+        return repo.save(billCollector);
     }
 
     public BillCollector findById(Long id) {
@@ -34,12 +32,7 @@ public class BillCollectorServiceImpl implements BillCollectorService {
         return repo.save(billCollector);
     }
 
-    public void delete(Long id) throws NotFoundException {
-        log.info("id", id);
-        BillCollector byId = findById(id);
-        if (Objects.isNull(findById(id))) {
-            throw new NotFoundException("Usuario nao existe.");
-        }
+    public void delete(Long id) {
         repo.deleteById(id);
     }
 
@@ -47,6 +40,11 @@ public class BillCollectorServiceImpl implements BillCollectorService {
         List<BillCollector> all = repo.findAll();
         log.info("data gastos: {}", all);
         return all;
+    }
+
+    @Override
+    public BillCollector findByName(String name) {
+        return repo.findByName(name);
     }
 
 }
