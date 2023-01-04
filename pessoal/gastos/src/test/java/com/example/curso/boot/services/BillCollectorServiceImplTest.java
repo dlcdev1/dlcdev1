@@ -29,13 +29,11 @@ class BillCollectorServiceImplTest {
 
         BillCollector billCollector = BillCollector.builder()
                 .name("Cemig")
-                .typeService("Eletrico")
                 .build();
 
         BillCollector billCollectorMock = BillCollector.builder()
                 .id(1L)
                 .name("Cemig")
-                .typeService("Eletrico")
                 .build();
 
 

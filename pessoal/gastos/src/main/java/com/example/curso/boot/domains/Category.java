@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BillCollector {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +31,7 @@ public class BillCollector {
     @Column(nullable = false, unique = true)
     private String name;
 
-    private String site;
-
-    @OneToMany(mappedBy = "billCollector")
-    private Set<Bill> bills;
-
-    @ManyToOne
-    @JoinColumn(name = "idCategory", nullable = false)
-    private Category category;
-
+    @OneToMany(mappedBy = "category")
+    private Set<BillCollector> billCollectors;
 
 }

@@ -1,17 +1,21 @@
 package com.example.curso.boot.web.controller;
 
 import com.example.curso.boot.domains.BillCollector;
+import com.example.curso.boot.domains.Category;
 import com.example.curso.boot.services.BillCollectorService;
+import com.example.curso.boot.services.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -20,7 +24,10 @@ import java.util.Objects;
 public class BillCollectorController {
 
     @Autowired
-    private BillCollectorService service;
+    private BillCollectorService billService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/cadastrar")
     public String cadastrar(BillCollector billCollector) {
@@ -29,17 +36,17 @@ public class BillCollectorController {
 
     @GetMapping("/listar")
     public String listar(ModelMap model) {
-        model.addAttribute("billCollector", service.findAll());
+        model.addAttribute("billCollector", billService.findAll());
         return "/collector/lista";
     }
 
     @PostMapping("/salvar")
     public String salvar(BillCollector billCollector, RedirectAttributes attr) {
 
-        if (!Objects.isNull(service.findByName(billCollector.getName()))) {
+        if (!Objects.isNull(billService.findByName(billCollector.getName()))) {
             attr.addFlashAttribute("fail", String.format("Cobrador '%s' ja existe.", billCollector.getName()));
         } else {
-            service.add(billCollector);
+            billService.add(billCollector);
             attr.addFlashAttribute("success", "Cobrador cadastrado com sucesso.");
         }
         return "redirect:/collectors/listar";
@@ -47,7 +54,7 @@ public class BillCollectorController {
 
     @GetMapping("/editar/{id}")
     public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-        model.addAttribute("billCollector", service.findById(id));
+        model.addAttribute("billCollector", billService.findById(id));
 
         return "/collector/cadastro";
     }
@@ -56,19 +63,24 @@ public class BillCollectorController {
     public String editar(BillCollector billCollector, RedirectAttributes attr) {
 
         attr.addFlashAttribute("success", "Cobrador editado com sucesso.");
-        service.update(billCollector);
+        billService.update(billCollector);
 
         return "redirect:/collectors/listar";
     }
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id, ModelMap model) {
-        if (Objects.isNull(service.findById(id))) {
+        if (Objects.isNull(billService.findById(id))) {
             model.addAttribute("fail", "Este cobrador não existe.");
         } else {
-            service.delete(id);
+            billService.delete(id);
             model.addAttribute("success", "Cobrador excluido.");
         }
         return listar(model);
+    }
+
+    @ModelAttribute("category")
+    public List<Category> listaDeCategorias() {
+        return categoryService.findAll();
     }
 }

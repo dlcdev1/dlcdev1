@@ -24,7 +24,7 @@
 
 	        <div class="container" id="cadastro">
 
-				<div th:replace="fragments/alert"></div>
+				<div th:replace="~{fragments/alert}"></div>
 
 	            <form th:action="${billCollector.id == null} ? @{/collectors/salvar} : @{/collectors/editar}"
 					  th:object="${billCollector}" method="POST">
@@ -36,27 +36,17 @@
 	                        <div class="invalid-feedback"></div>
 	                    </div>
 	                </div>
-	                <div class="form-row">
-	                    <div class="form-group col-md-6">
-	                        <label for="type_service">Categoria</label>
-	                        <select id="type_service" class="form-control" name="typeService" th:field="*{typeService}">
-	                            <option value="" >Selecione...</option>
-	                            <option value="Agua">Agua</option>
-	                            <option value="Eletrica">Eletrica</option>
-	                            <option value="Telefonia">Telefonia</option>
-	                            <option value="Cartao">Cartao</option>
-	                            <option value="Iptu">Iptu</option>
-	                            <option value="Seguro">Seguro</option>
-	                            <option value="Escola">Escola</option>
-	                            <option value="Emprestimo">Emprestimo</option>
-	                            <option value="Internet">Internet</option>
-	                            <option value="Outros">Outros</option>
-	                        </select>
-	                        <div class="invalid-feedback">
-
-	                        </div>
-	                    </div>
-	                </div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="category">Categoria</label>
+							<select id="category" class="form-control" th:field="*{category}">
+								<option value="" >Selecione</option>
+								<option th:each="c : ${category}"
+										th:value="${c.id}" th:text="${c.name}">Agua
+								</option>
+							</select>
+						</div>
+					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="site">Site</label>
