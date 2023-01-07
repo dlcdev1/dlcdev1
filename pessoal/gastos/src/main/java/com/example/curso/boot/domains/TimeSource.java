@@ -36,7 +36,7 @@ public class TimeSource {
     @Column(nullable = false, length = 4)
     private Integer Year;
 
-    @OneToMany(mappedBy = "timeSource")
-    private Set<Bill> bills;
+//    @OneToMany(mappedBy = "timeSource")
+//    private Set<Bill> bills;
 
 }

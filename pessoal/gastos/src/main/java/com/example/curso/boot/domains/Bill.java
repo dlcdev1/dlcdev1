@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,6 +36,7 @@ public class Bill {
     private BigDecimal value;
 
     @Column(name = "due_date")
+    @DateTimeFormat(pattern = "dd-MM-YYYY")
     private LocalDate dueDate;
 
     @Column
@@ -47,7 +49,7 @@ public class Bill {
     @JoinColumn(name = "idBillCollector")
     private BillCollector billCollector;
 
-    @ManyToOne
-    @JoinColumn(name = "idBillTimeSource")
-    private TimeSource timeSource;
+//    @ManyToOne
+//    @JoinColumn(name = "idBillTimeSource")
+//    private TimeSource timeSource;
 }
