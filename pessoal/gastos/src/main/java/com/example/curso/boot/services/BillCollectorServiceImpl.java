@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -14,7 +16,7 @@ import java.util.List;
 public class BillCollectorServiceImpl implements BillCollectorService {
     private final BillCollectorsRepository repo;
 
-    public BillCollector add(final BillCollector billCollector){
+    public BillCollector add(final BillCollector billCollector) {
         log.info("Bill collector {}", billCollector);
         return repo.save(billCollector);
     }
@@ -32,9 +34,9 @@ public class BillCollectorServiceImpl implements BillCollectorService {
     }
 
     public List<BillCollector> findAll() {
-        List<BillCollector> all = repo.findAll();
-        log.info("data gastos: {}", all);
-        return all;
+        return repo.findAll().stream().sorted(
+                Comparator.comparing(BillCollector::getName))
+                .collect(Collectors.toList());
     }
 
     @Override
