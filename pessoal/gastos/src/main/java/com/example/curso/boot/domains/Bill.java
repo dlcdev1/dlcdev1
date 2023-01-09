@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,7 +48,7 @@ public class Bill {
     @JoinColumn(name = "idBillCollector")
     private BillCollector billCollector;
 
-//    @ManyToOne
-//    @JoinColumn(name = "idBillTimeSource")
-//    private TimeSource timeSource;
+    @ManyToOne
+    @JoinColumn(name = "idBillTimeSource")
+    private TimeSource timeSource;
 }

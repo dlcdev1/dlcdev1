@@ -2,13 +2,11 @@ package com.example.curso.boot.web.controller;
 
 import com.example.curso.boot.domains.Bill;
 import com.example.curso.boot.domains.BillCollector;
-import com.example.curso.boot.domains.Category;
 import com.example.curso.boot.domains.TimeSource;
 import com.example.curso.boot.services.BillCollectorService;
 import com.example.curso.boot.services.BillService;
-import com.example.curso.boot.services.CategoryService;
+import com.example.curso.boot.services.TimeSourceService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +24,20 @@ import java.util.Objects;
 @RequestMapping("/bills")
 public class BillController {
 
-    @Autowired
-    private BillService billService;
+    private final BillService billService;
 
-    @Autowired
-    private BillCollectorService billCollectorService;
+    private final BillCollectorService billCollectorService;
+
+    private final TimeSourceService timeSourceService;
+
+    public BillController(BillService billService,
+                          BillCollectorService billCollectorService,
+                          TimeSourceService timeSourceService
+    ) {
+        this.billService = billService;
+        this.billCollectorService = billCollectorService;
+        this.timeSourceService = timeSourceService;
+    }
 
 
     @GetMapping("/cadastrar")
@@ -85,8 +92,8 @@ public class BillController {
         return billCollectorService.findAll();
     }
 
-//    @ModelAttribute("category")
-//    public List<TimeSource> listaDePeriodos() {
-//        return categoryService.findAll();
-//    }
+    @ModelAttribute("time_source")
+    public List<TimeSource> listaDePeriodos() {
+        return timeSourceService.findAll();
+    }
 }

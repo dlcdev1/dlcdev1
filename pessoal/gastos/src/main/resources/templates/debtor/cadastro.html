@@ -61,14 +61,14 @@
             <!--                    <div class="invalid-feedback"></div>-->
             <!--                </div>-->
             <!--            </div>-->
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="name">Nome do devedor</label>
-                    <input type="text" class="form-control" id="name" placeholder="Nome do devedor"
-                           autofocus="autofocus"
-                           th:field="*{name}"/>
-                </div>
-            </div>
+            <!--            <div class="form-row">-->
+            <!--                <div class="form-group col-md-6">-->
+            <!--                    <label for="name">Nome do devedor</label>-->
+            <!--                    <input type="text" class="form-control" id="name" placeholder="Nome do devedor"-->
+            <!--                           autofocus="autofocus"-->
+            <!--                           th:field="*{name}"/>-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="value">Valor</label>
@@ -77,6 +77,14 @@
                            data-mask-reverse="true" th:field="*{wage}"/>
                     <div class="invalid-feedback">
                     </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="entryDate">Data da Entrada</label>
+                    <input type="date" class="form-control" id="entryDate"
+                           th:value="*{entryDate}"/>
+                    <div class="invalid-feedback"></div>
                 </div>
             </div>
             <input type="hidden" id="id" th:field="*{id}"/>

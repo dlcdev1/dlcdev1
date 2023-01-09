@@ -8,7 +8,7 @@ public enum MES {
     MAIO("MAI", "Maio"),
     JUNHO("JUN", "Junho"),
     JULHO("JUL", "Julho"),
-    AGOSTO("AGO", "Aagosto"),
+    AGOSTO("AGO", "Agosto"),
     SETEMBRO("SET", "Setembro"),
     OUTUBRO("OUT", "Outubro"),
     NOVEMBRO("NOV", "Novembro"),

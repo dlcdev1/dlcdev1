@@ -1,6 +1,5 @@
 package com.example.curso.boot.services;
 
-import com.example.curso.boot.domains.BillCollector;
 import com.example.curso.boot.domains.Category;
 import org.webjars.NotFoundException;
 

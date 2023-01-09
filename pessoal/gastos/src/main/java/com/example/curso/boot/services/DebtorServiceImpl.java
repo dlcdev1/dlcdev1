@@ -1,8 +1,6 @@
 package com.example.curso.boot.services;
 
-import com.example.curso.boot.domains.Bill;
 import com.example.curso.boot.domains.Debtor;
-import com.example.curso.boot.repositories.BillRepository;
 import com.example.curso.boot.repositories.DebtorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +13,10 @@ import java.util.List;
 public class DebtorServiceImpl implements DebtorService {
 
     private DebtorRepository repo;
+
+    public DebtorServiceImpl(DebtorRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public Debtor add(Debtor debtor) {
