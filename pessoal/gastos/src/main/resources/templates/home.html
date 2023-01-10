@@ -1,54 +1,81 @@
 <!DOCTYPE html>
-<html  layout:decorate="~{layout}">
-<head><meta charset="UTF-8" /></head>
+<html layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8"/>
+</head>
 <body>
 <section class="layout-content" layout:fragment="corpo">
-	<nav class="navbar navbar-expand-md bg-light">
-		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<i class="oi oi-caret-right"></i>
-					<span>Home</span>
-				</li>
-			</ul>
-		</div>
-	</nav>
+    <nav class="navbar navbar-expand-md bg-light">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <i class="oi oi-caret-right"></i>
+                    <span>Home</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-	<div class="container" id="listagem">
+    <div class="container" id="listagem">
 
-		<div th:replace="~{fragments/alert}"></div>
+        <div th:replace="~{fragments/alert}"></div>
 
-		<div class="table-responsive">
-			<table class="table table-striped table-hover table-sm">
-				<thead>
-				<tr>
-					<th>#</th>
-					<th>Mes</th>
-					<th>Ano</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr th:each="per, index: ${timeSource}">
-					<td th:text="${index.count}">3</td>
-					<td th:text="${per.mes}">Mes</td>
-					<td th:text="${per.year}">Ano</td>
-					<td colspan="2">
-						<a class="btn btn-info btn-sm" th:href="@{/periods/editar/{id} (id=${per.id})}"
-						   role="button">
-							<span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-						</a>
-						<button th:id="${ 'btn_periods/excluir/' + per.id}" type="button"
-								class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
-							<span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
-						</button>
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+        <div class="table-responsive" th:with="value=0">
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Conta</th>
+                    <th>Venciemnto</th>
+                    <th>Valor</th>
+                    <th>Pago</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bil, index: ${bill}">
+                    <td th:text="${index.count}">3</td>
+                    <td th:text="${bil.billCollector.name}">Conta</td>
+                    <td th:text="${{bil.dueDate}}">Vencimento</td>
+                    <td th:text="${bil.value}">Value</td>
+                    <td th:text="${bil.paidOut} ? 'Sim' : 'Não'">Pago</td>
+                    <td colspan="2">
+                        <a class="btn btn-info btn-sm" th:href="@{/bills/editar/{id} (id=${bil.id})}"
+                           role="button">
+                            <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+                        </a>
+                        <button th:id="${ 'btn_bills/excluir/' + bil.id}" type="button"
+                                class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+                            <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
+                        </button>
 
-	<div th:replace="~{fragments/modal :: modal}"></div>
+                    </td>
+                </tr>
+                </tbody>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Total</th>
+                    <th>Valor para pagamento</th>
+                    <th>Pago</th>
+                    <th>Diferença</th>
+                    <th>#-------#</th>
+                </tr>
+                <tbody>
+                <tr>
+                    <th>#</th>
+                    <td th:text="${#aggregates.sum(bill.![value])}">Valor</td>
+                    <td><input name="status" th:value="${#aggregates.sum(bill.![value])}"></td>
+                    <td>-444</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/modal :: modal}"></div>
 
 
 </section>
