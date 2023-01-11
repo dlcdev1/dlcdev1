@@ -23,6 +23,7 @@ public class TimeSourceImpl implements TimeSourceService {
 
     @Override
     public TimeSource add(final TimeSource timeSource) {
+        timeSource.setMesYear(timeSource.getMes() + '-' + timeSource.getYear());
         return repo.save(timeSource);
     }
 

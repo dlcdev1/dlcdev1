@@ -55,6 +55,17 @@
                 </div>
             </div>
             <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="timeSource">Mes</label>
+                    <select id="timeSource" class="form-control" th:field="*{timeSource}">
+                        <option value="">Selecione</option>
+                        <option th:each="c : ${timeSource}"
+                                th:value="${c.id}" th:text="${c.mesYear}">Mes
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
                 <div class="form-check col-md-6">
                     <label for="billCollector">Pago</label>
                     <input type=checkbox class="form-control" id="paidOut"

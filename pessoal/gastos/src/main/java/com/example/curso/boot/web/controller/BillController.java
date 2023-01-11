@@ -92,7 +92,7 @@ public class BillController {
         return billCollectorService.findAll();
     }
 
-    @ModelAttribute("time_source")
+    @ModelAttribute("timeSource")
     public List<TimeSource> listaDePeriodos() {
         return timeSourceService.findAll();
     }

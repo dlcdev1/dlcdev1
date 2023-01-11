@@ -32,6 +32,9 @@ public class TimeSource {
     @Column(nullable = false)
     private Integer year;
 
+    @Column(nullable = false)
+    private String mesYear;
+
     @OneToMany(mappedBy = "timeSource")
     private Set<Bill> bills;
 

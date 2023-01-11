@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout}">
+<html layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
 </head>
@@ -55,19 +55,23 @@
                 <tr>
                     <th>#</th>
                     <th>Total</th>
-                    <th>Valor para pagamento</th>
                     <th>Pago</th>
                     <th>Diferença</th>
+                    <th>Valor para pagamento</th>
                     <th>#-------#</th>
                 </tr>
                 <tbody>
                 <tr>
                     <th>#</th>
                     <td th:text="${#aggregates.sum(bill.![value])}">Valor</td>
-                    <td><input name="status" th:value="${#aggregates.sum(bill.![value])}"></td>
                     <td>-444</td>
                     <td></td>
-                    <td></td>
+                    <form th:action="@{/debtors/salvar}" method="post" th:object="${debtors}">
+                        <td><input name="wage" type="text" id="wage"></td>
+                        <td>
+                            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                    </form>
+                    </td>
                 </tr>
                 </tbody>
                 </thead>

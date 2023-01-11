@@ -32,8 +32,10 @@
                     <th>#</th>
                     <th>Conta</th>
                     <th>Vencimento</th>
+                    <th>Periodo</th>
                     <th>Valor</th>
                     <th>Pago</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -41,6 +43,7 @@
                     <td th:text="${index.count}">3</td>
                     <td th:text="${bil.billCollector.name}">Conta</td>
                     <td th:text="${{bil.dueDate}}" >Vencimento</td>
+                    <td th:text="${bil.timeSource.mesYear}" >Periodo</td>
                     <td th:text="${bil.value}">Value</td>
                     <td th:text="${bil.paidOut} ? 'Sim' : 'Não'">Pago</td>
                     <td colspan="2">
