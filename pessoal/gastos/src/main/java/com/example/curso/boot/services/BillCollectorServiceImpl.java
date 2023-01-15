@@ -34,9 +34,11 @@ public class BillCollectorServiceImpl implements BillCollectorService {
     }
 
     public List<BillCollector> findAll() {
-        return repo.findAll().stream().sorted(
-                Comparator.comparing(BillCollector::getName))
+
+        List<BillCollector> result = repo.findAll().stream().sorted(
+                        Comparator.comparing(BillCollector::getName))
                 .collect(Collectors.toList());
+        return result;
     }
 
     @Override

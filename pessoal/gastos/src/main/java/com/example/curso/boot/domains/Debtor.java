@@ -29,16 +29,11 @@ public class Debtor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(nullable = false, unique = true)
-//    private String name;
-
     @Column(nullable = false)
     private BigDecimal wage;
 
-    @Column(name = "entry_date")
-    private LocalDate entryDate;
     @ManyToOne
-    @JoinColumn(name = "id_bill")
-    private Bill bill;
+    @JoinColumn(name = "timeSource")
+    private TimeSource timeSource;
 
 }

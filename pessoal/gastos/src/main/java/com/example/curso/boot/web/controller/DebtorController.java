@@ -2,6 +2,7 @@ package com.example.curso.boot.web.controller;
 
 import com.example.curso.boot.domains.Bill;
 import com.example.curso.boot.domains.BillCollector;
+import com.example.curso.boot.domains.BillDto;
 import com.example.curso.boot.domains.Debtor;
 import com.example.curso.boot.services.BillCollectorService;
 import com.example.curso.boot.services.BillService;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -46,10 +48,20 @@ public class DebtorController {
     @PostMapping("/salvar")
     public String salvar(Debtor debtor, RedirectAttributes attr) {
 
-        debtorService.add(debtor);
-        attr.addFlashAttribute("success", "Devedor cadastrado com sucesso.");
+//        .stream().map(w -> w.getWage()).collect(Collectors.toList()).get(0);
+        if (!Objects.isNull(debtor.getTimeSource())) {
+            final var id = debtor.getTimeSource().getDebtors().stream().map(d -> d.getId()).collect(Collectors.toList()).get(0);
+            Debtor debtorFind = debtorService.findById(id);
+            debtorFind.setWage(debtor.getWage());
+            debtorService.add(debtorFind);
+            attr.addFlashAttribute("success", "Devedor editador com sucesso.");
+        } else {
+            debtorService.add(debtor);
+            attr.addFlashAttribute("success", "Devedor cadastrado com sucesso.");
 
-        return "redirect:/debtors/listar";
+        }
+
+        return "redirect:/";
     }
 
     @GetMapping("/editar/{id}")
@@ -80,7 +92,7 @@ public class DebtorController {
 //    }
 
     @ModelAttribute("bill")
-    public List<Bill> listaDeCobradores() {
+    public BillDto listaDeCobradores() {
         return billService.findAll();
     }
 

@@ -38,4 +38,8 @@ public class TimeSource {
     @OneToMany(mappedBy = "timeSource")
     private Set<Bill> bills;
 
+    @OneToMany(mappedBy = "timeSource")
+    private Set<Debtor> debtors;
+
+
 }

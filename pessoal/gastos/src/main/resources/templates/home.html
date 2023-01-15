@@ -32,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="bil, index: ${bill}">
+                <tr th:each="bil, index: ${bill.billList}">
                     <td th:text="${index.count}">3</td>
                     <td th:text="${bil.billCollector.name}">Conta</td>
                     <td th:text="${{bil.dueDate}}">Vencimento</td>
@@ -63,11 +63,18 @@
                 <tbody>
                 <tr>
                     <th>#</th>
-                    <td th:text="${#aggregates.sum(bill.![value])}">Valor</td>
+                    <td th:text="${#aggregates.sum(bill.billList.![value])}">Valor</td>
+
                     <td>-444</td>
-                    <td></td>
+
+<!--                    "${bill.id == null} ? @{/bills/salvar} : @{/bills/editar}-->
                     <form th:action="@{/debtors/salvar}" method="post" th:object="${debtors}">
-                        <td><input name="wage" type="text" id="wage"></td>
+                        <td>
+                            <input name="timeSource" text="text" id="timeSource"
+                                   th:value="${bill.billList[0].timeSource.id}">
+                        </td>
+                        <td><input name="wage" type="text" id="wage" th:value="${bill.wage}"></td>
+
                         <td>
                             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
                     </form>
@@ -86,3 +93,5 @@
 
 </body>
 </html>
+
+

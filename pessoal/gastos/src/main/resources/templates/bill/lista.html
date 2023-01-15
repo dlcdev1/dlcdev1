@@ -39,7 +39,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="bil, index: ${bill}">
+                <tr th:each="bil, index: ${bill.billList}">
                     <td th:text="${index.count}">3</td>
                     <td th:text="${bil.billCollector.name}">Conta</td>
                     <td th:text="${{bil.dueDate}}" >Vencimento</td>
