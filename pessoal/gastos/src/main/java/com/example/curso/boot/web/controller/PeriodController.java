@@ -1,6 +1,5 @@
 package com.example.curso.boot.web.controller;
 
-import com.example.curso.boot.domains.Category;
 import com.example.curso.boot.domains.TimeSource;
 import com.example.curso.boot.services.TimeSourceService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static com.example.curso.boot.web.controller.MESSAGES.ATUALIZADO;
+import static com.example.curso.boot.web.controller.MESSAGES.CADASTRADO;
+import static com.example.curso.boot.web.controller.MESSAGES.FAIL;
+import static com.example.curso.boot.web.controller.MESSAGES.NOTHING;
+import static com.example.curso.boot.web.controller.MESSAGES.SUCCESS;
 
 @Slf4j
 @Controller
@@ -20,6 +23,9 @@ import static com.example.curso.boot.web.controller.MESSAGES.ATUALIZADO;
 public class PeriodController {
 
     private final TimeSourceService service;
+
+    public static String MES = "";
+    public static Integer YEAR = 0;
 
     public PeriodController(TimeSourceService service) {
         this.service = service;
@@ -39,10 +45,25 @@ public class PeriodController {
 
     @PostMapping("/salvar")
     public String salvar(TimeSource timeSource, RedirectAttributes attr) {
+        getMes(timeSource);
+        getYear(timeSource);
 
-        variables(timeSource, attr, MESSAGES.CADASTRADO.getMessage());
+        if (validateMesAntYear(attr, MES, YEAR)) {
+            getFlashAttributesMessages(attr, FAIL.getMessage(), FAIL.getMessage());
+        } else {
+            service.update(timeSource);
+            getFlashAttributesMessages(attr, SUCCESS.getMessage(), CADASTRADO.getMessage());
+        }
 
         return "redirect:/periods/cadastrar";
+    }
+
+    private static void getYear(TimeSource timeSource) {
+        YEAR = timeSource.getYear();
+    }
+
+    private static void getMes(TimeSource timeSource) {
+        MES = timeSource.getMes();
     }
 
     @GetMapping("/editar/{id}")
@@ -53,22 +74,33 @@ public class PeriodController {
 
     @PostMapping("/editar")
     public String editar(TimeSource timeSource, RedirectAttributes attr) {
+        getMes(timeSource);
+        getYear(timeSource);
 
-        variables(timeSource, attr, ATUALIZADO.getMessage());
+        if (validateMesAntYear(attr, MES, YEAR)) {
+            getFlashAttributesMessages(attr, FAIL.getMessage(), FAIL.getMessage());
+        } else {
+            service.update(timeSource);
+            getFlashAttributesMessages(attr, SUCCESS.getMessage(), ATUALIZADO.getMessage());
+        }
 
         return "redirect:/periods/listar";
     }
 
-    private void variables(TimeSource timeSource, RedirectAttributes attr, String message) {
-        final var mes = timeSource.getMes();
-        final var year = timeSource.getYear();
+    private void getFlashAttributesMessages(RedirectAttributes attr, String result, String action) {
 
-        if (service.findByMesAndYear(mes, year)) {
-            attr.addFlashAttribute("fail", "Periodo ja cadastrado.");
+        if (result.equals(FAIL.getMessage())) {
+            attr.addFlashAttribute(FAIL.getMessage(), "Periodo ja cadastrado.");
         } else {
-            service.add(timeSource);
-            attr.addFlashAttribute("success", String.format("Periodo %s com sucesso.", message));
+            attr.addFlashAttribute(SUCCESS.getMessage(), String.format("Periodo %s com sucesso.", action));
         }
+    }
+
+    private boolean validateMesAntYear(RedirectAttributes attr, String mes, Integer year) {
+        if (service.findByMesAndYear(mes, year)) {
+            return true;
+        }
+        return false;
     }
 
     @GetMapping("/excluir/{id}")

@@ -9,6 +9,7 @@ import org.webjars.NotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -47,12 +48,46 @@ public class BillServiceImpl implements BillService {
 
         List<Bill> result = repo.findAll();
 
-        BigDecimal wage = result.get(0).getTimeSource().getDebtors()
-                .stream().map(w -> w.getWage()).collect(Collectors.toList()).get(0);
+        Long timerSourceId = getTimerSourceId(result);
+        BigDecimal wage = getWageByBills(result);
+
+        return BillDto.builder().wage(wage)
+                .timeSourceId(timerSourceId)
+                .billList(result).build();
+    }
+
+    private static BigDecimal getWageByBills(List<Bill> result) {
+
+        try {
+            return result.get(0).getTimeSource().getDebtors().stream().map(w -> w.getWage())
+                    .collect(Collectors.toList()).get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    @Override
+    public BillDto findByPeriod(Long id) {
+        List<Bill> billByTimeSource = repo.findBillByTimeSourceId(id);
+
+        Long timerSourceId = getTimerSourceId(billByTimeSource);
+
+        BigDecimal resultWage = getWageByBills(billByTimeSource);
 
         return BillDto.builder()
-                .wage(wage)
-                .billList(result)
+                .wage(resultWage)
+                .timeSourceId(timerSourceId)
+                .billList(billByTimeSource)
                 .build();
+
+    }
+
+    private static Long getTimerSourceId(List<Bill> billByTimeSource) {
+
+        try {
+            return billByTimeSource.get(0).getTimeSource().getId();
+        } catch (IndexOutOfBoundsException e) {
+            return 0L;
+        }
     }
 }

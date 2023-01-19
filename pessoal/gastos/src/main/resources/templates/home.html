@@ -10,85 +10,111 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <i class="oi oi-caret-right"></i>
-                    <span>Home</span>
+                    <span>Contas</span>
                 </li>
             </ul>
         </div>
     </nav>
+    <div class="container">
 
-    <div class="container" id="listagem">
+        <p>
+            <i class="oi oi-magnifying-glass"></i><span></span>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsePeriod"
+                    aria-controls="collapsePeriod">Periodo
+            </button>
+        </p>
 
-        <div th:replace="~{fragments/alert}"></div>
+        <div class="row">
+            <div class="col">
+                <div class="collapse" id="collapsePeriod">
+                    <nav class="navbar navbar-light bg-light">
 
-        <div class="table-responsive" th:with="value=0">
-            <table class="table table-striped table-hover table-sm">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Conta</th>
-                    <th>Venciemnto</th>
-                    <th>Valor</th>
-                    <th>Pago</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="bil, index: ${bill.billList}">
-                    <td th:text="${index.count}">3</td>
-                    <td th:text="${bil.billCollector.name}">Conta</td>
-                    <td th:text="${{bil.dueDate}}">Vencimento</td>
-                    <td th:text="${bil.value}">Value</td>
-                    <td th:text="${bil.paidOut} ? 'Sim' : 'Não'">Pago</td>
-                    <td colspan="2">
-                        <a class="btn btn-info btn-sm" th:href="@{/bills/editar/{id} (id=${bil.id})}"
-                           role="button">
-                            <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
-                        </a>
-                        <button th:id="${ 'btn_bills/excluir/' + bil.id}" type="button"
-                                class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
-                            <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
-                        </button>
+                        <form class="form-inline" method="GET" th:action="@{/home/buscar/periodo}">
+                            <select class="form-control mr-sm-2" th:name="id" aria-label="Search">
+                                <option th:each="time : ${timeSource}"
+                                        th:value="${time.id}"
+                                        th:text="${time.mesYear}">Mes
+                                </option>
+                            </select>
+                            <button class="btn btn-outline-success my-2 my-sm-0">Search</button>
+                        </form>
+                    </nav>
 
-                    </td>
-                </tr>
-                </tbody>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Total</th>
-                    <th>Pago</th>
-                    <th>Diferença</th>
-                    <th>Valor para pagamento</th>
-                    <th>#-------#</th>
-                </tr>
-                <tbody>
-                <tr>
-                    <th>#</th>
-                    <td th:text="${#aggregates.sum(bill.billList.![value])}">Valor</td>
-
-                    <td>-444</td>
-
-<!--                    "${bill.id == null} ? @{/bills/salvar} : @{/bills/editar}-->
-                    <form th:action="@{/debtors/salvar}" method="post" th:object="${debtors}">
-                        <td>
-                            <input name="timeSource" text="text" id="timeSource"
-                                   th:value="${bill.billList[0].timeSource.id}">
-                        </td>
-                        <td><input name="wage" type="text" id="wage" th:value="${bill.wage}"></td>
-
-                        <td>
-                            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                    </form>
-                    </td>
-                </tr>
-                </tbody>
-                </thead>
-            </table>
+                </div>
+            </div>
         </div>
+        <div class="table-responsive">
+
+    <div th:replace="~{fragments/alert}"></div>
+
+    <div class="table-responsive" th:with="value=0">
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Conta</th>
+                <th>Venciemnto</th>
+                <th>Valor</th>
+                <th>Pago</th>
+                <th>Editar/Excluir</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bil, index: ${bill.billList}">
+                <td th:text="${index.count}">3</td>
+                <td th:text="${bil.billCollector.name}">Conta</td>
+                <td th:text="${{bil.dueDate}}">Vencimento</td>
+                <td th:text="${bil.value}">Value</td>
+                <td th:text="${bil.paidOut} ? 'Sim' : 'Não'">Pago</td>
+                <td colspan="2">
+                    <a class="btn btn-info btn-sm" th:href="@{/bills/editar/{id} (id=${bil.id})}"
+                       role="button">
+                        <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+                    </a>
+                    <button th:id="${ 'btn_bills/excluir/' + bil.id}" type="button"
+                            class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">
+                        <span class="oi oi-circle-x" title="Exclusão desabilitada" aria-hidden="true"></span>
+                    </button>
+
+                </td>
+            </tr>
+            </tbody>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Total</th>
+                <th>Pago</th>
+                <th>Diferença</th>
+                <th>Valor para pagamento</th>
+                <th>#-------#</th>
+            </tr>
+            <tbody>
+            <tr>
+                <th>#</th>
+                <td th:text="${#aggregates.sum(bill.billList.![value])}">Valor</td>
+
+                <td>-444</td>
+                <form th:action="@{/debtors/salvar}" method="post" th:object="${debtors}">
+                    <td>
+                        <input name="timeSource" text="text" id="timeSource"
+                               th:value="${bill.timeSourceId}">
+                    </td>
+                    <td><input name="wage" type="text" id="wage" data-mask="#.##0,00" data-mask-reverse="true"
+                               th:value="${bill.wage}"></td>
+
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                </form>
+                </td>
+            </tr>
+            </tbody>
+            </thead>
+        </table>
+    </div>
     </div>
 
     <div th:replace="~{fragments/modal :: modal}"></div>
-
-
+    </div>
 </section>
 
 </body>

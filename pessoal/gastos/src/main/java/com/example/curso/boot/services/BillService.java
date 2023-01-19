@@ -19,4 +19,6 @@ public interface BillService {
 
     BillDto findAll();
 
+    BillDto findByPeriod(Long period);
+
 }

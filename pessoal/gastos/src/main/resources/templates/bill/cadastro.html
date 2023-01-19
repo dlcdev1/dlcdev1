@@ -19,7 +19,6 @@
             <span>Listar Contas</span>
         </a>
     </nav>
-
     <div class="container" id="cadastro">
         <div th:replace="~{fragments/alert}"></div>
 
@@ -39,7 +38,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="value">Valor</label>
-                    <input type="text" class="form-control" id="value" data-mask="#.##0.00"
+                    <input type="text" class="form-control" id="value" data-mask="#.##0,00"
                            placeholder="valor do debito"
                            data-mask-reverse="true" th:field="*{value}"/>
                     <div class="invalid-feedback">

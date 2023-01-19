@@ -2,7 +2,12 @@ package com.example.curso.boot.web.controller;
 
 public enum MESSAGES {
     ATUALIZADO("Atualizado"),
-    CADASTRADO("Cadastrado");
+    CADASTRADO("Cadastrado"),
+    SUCCESS("success"),
+    FAIL("fail"),
+    NOTHING("nothing");
+
+
 
     private String message;
 

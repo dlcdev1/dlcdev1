@@ -4,8 +4,10 @@ import com.example.curso.boot.domains.TimeSource;
 import com.example.curso.boot.repositories.TimeSourceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.webjars.NotFoundException;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -43,6 +45,7 @@ public class TimeSourceImpl implements TimeSourceService {
 
     @Override
     public TimeSource update(TimeSource timeSource) throws NotFoundException {
+        timeSource.setMesYear(timeSource.getMes() + '-' + timeSource.getYear());
         return repo.save(timeSource);
     }
 
@@ -53,10 +56,14 @@ public class TimeSourceImpl implements TimeSourceService {
 
     @Override
     public List<TimeSource> findAll() {
+
         return repo.findAll().stream().sorted(
-                Comparator.comparing(
-                        TimeSource::getYear)
+                        Collections.reverseOrder(
+                                Comparator.comparing(
+                                TimeSource::getYear)
+                        )
                 )
                 .collect(Collectors.toList());
     }
+
 }

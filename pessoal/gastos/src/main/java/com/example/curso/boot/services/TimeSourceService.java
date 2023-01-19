@@ -1,5 +1,6 @@
 package com.example.curso.boot.services;
 
+import com.example.curso.boot.domains.Bill;
 import com.example.curso.boot.domains.TimeSource;
 import org.webjars.NotFoundException;
 
@@ -18,5 +19,4 @@ public interface TimeSourceService {
     void delete(Long id);
 
     List<TimeSource> findAll();
-
 }

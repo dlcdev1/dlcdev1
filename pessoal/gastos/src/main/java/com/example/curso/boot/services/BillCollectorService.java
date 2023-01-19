@@ -1,5 +1,6 @@
 package com.example.curso.boot.services;
 
+import com.example.curso.boot.domains.Bill;
 import com.example.curso.boot.domains.BillCollector;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface BillCollectorService {
     List<BillCollector> findAll();
 
     BillCollector findByName(String name);
+
 }

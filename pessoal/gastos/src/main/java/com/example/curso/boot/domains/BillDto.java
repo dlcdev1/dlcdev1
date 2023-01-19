@@ -27,5 +27,6 @@ public class BillDto {
 
     private List<Bill> billList;
     private BigDecimal wage;
+    private Long timeSourceId;
 
 }

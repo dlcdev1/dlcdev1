@@ -11,7 +11,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -34,6 +36,10 @@ public class TimeSource {
 
     @Column(nullable = false)
     private String mesYear;
+
+    @Column(name = "due_date")
+    @DateTimeFormat(pattern = "dd-MM-YYYY")
+    private LocalDate dueDate;
 
     @OneToMany(mappedBy = "timeSource")
     private Set<Bill> bills;

@@ -50,9 +50,13 @@ public class DebtorController {
 
 //        .stream().map(w -> w.getWage()).collect(Collectors.toList()).get(0);
         if (!Objects.isNull(debtor.getTimeSource())) {
-            final var id = debtor.getTimeSource().getDebtors().stream().map(d -> d.getId()).collect(Collectors.toList()).get(0);
+            final var id = debtor.getTimeSource().getDebtors().stream().map(d -> d.getId()).
+                    collect(Collectors.toList()).get(0);
+
             Debtor debtorFind = debtorService.findById(id);
+
             debtorFind.setWage(debtor.getWage());
+
             debtorService.add(debtorFind);
             attr.addFlashAttribute("success", "Devedor editador com sucesso.");
         } else {
@@ -61,7 +65,7 @@ public class DebtorController {
 
         }
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/editar/{id}")
