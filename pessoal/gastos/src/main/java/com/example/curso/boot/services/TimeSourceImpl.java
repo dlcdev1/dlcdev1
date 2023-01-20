@@ -1,12 +1,13 @@
 package com.example.curso.boot.services;
 
+import com.example.curso.boot.domains.MES;
 import com.example.curso.boot.domains.TimeSource;
 import com.example.curso.boot.repositories.TimeSourceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.webjars.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,8 +26,8 @@ public class TimeSourceImpl implements TimeSourceService {
 
     @Override
     public TimeSource add(final TimeSource timeSource) {
-        timeSource.setMesYear(timeSource.getMes() + '-' + timeSource.getYear());
-        return repo.save(timeSource);
+        TimeSource saveTimeSource = factoryMesYear(timeSource);
+        return repo.save(saveTimeSource);
     }
 
     @Override
@@ -45,8 +46,25 @@ public class TimeSourceImpl implements TimeSourceService {
 
     @Override
     public TimeSource update(TimeSource timeSource) throws NotFoundException {
-        timeSource.setMesYear(timeSource.getMes() + '-' + timeSource.getYear());
-        return repo.save(timeSource);
+        TimeSource updateTimeSource = factoryMesYear(timeSource);
+        return repo.save(updateTimeSource);
+    }
+
+    private static TimeSource factoryMesYear(TimeSource timeSource) {
+        final Integer year = timeSource.getYear();
+        final String mes = timeSource.getMes();
+        final LocalDate creatAt = LocalDate.of(
+                year, MES.valueOf(mes.toUpperCase()).getDescricao(),
+                LocalDate.now().getDayOfMonth()
+        );
+
+        String mesYear = mes + '-' + year;
+        return TimeSource.builder()
+                .year(timeSource.getYear())
+                .mes(timeSource.getMes())
+                .mesYear(mesYear)
+                .creatAt(creatAt)
+                .build();
     }
 
     @Override
@@ -60,7 +78,7 @@ public class TimeSourceImpl implements TimeSourceService {
         return repo.findAll().stream().sorted(
                         Collections.reverseOrder(
                                 Comparator.comparing(
-                                TimeSource::getYear)
+                                TimeSource::getCreatAt)
                         )
                 )
                 .collect(Collectors.toList());

@@ -1,31 +1,28 @@
 package com.example.curso.boot.domains;
 
-public enum MES {
-    JANEIRO("JAN", "Janeiro"),
-    FEVEREIRO("FEV", "Fevereiro"),
-    MARCO("MAR", "Março"),
-    ABRIL("ABR", "Abril"),
-    MAIO("MAI", "Maio"),
-    JUNHO("JUN", "Junho"),
-    JULHO("JUL", "Julho"),
-    AGOSTO("AGO", "Agosto"),
-    SETEMBRO("SET", "Setembro"),
-    OUTUBRO("OUT", "Outubro"),
-    NOVEMBRO("NOV", "Novembro"),
-    DEZEMBRO("DEZ", "Dezembro");
-    private String sigla;
-    private String descricao;
+import java.time.Month;
 
-    MES(String sigla, String descricao) {
-        this.sigla = sigla;
+public enum MES {
+    JANEIRO(Month.JANUARY),
+    FEVEREIRO(Month.FEBRUARY),
+    MARCO(Month.MARCH),
+    ABRIL(Month.APRIL),
+    MAIO(Month.MAY),
+    JUNHO(Month.JUNE),
+    JULHO(Month.JULY),
+    AGOSTO(Month.AUGUST),
+    SETEMBRO(Month.SEPTEMBER),
+    OUTUBRO(Month.OCTOBER),
+    NOVEMBRO(Month.NOVEMBER),
+    DEZEMBRO(Month.DECEMBER);
+
+    private final Month descricao;
+
+    MES(Month descricao) {
         this.descricao = descricao;
     }
 
-    public String getSigla() {
-        return sigla;
-    }
-
-    public String getDescricao() {
+    public Month getDescricao() {
         return descricao;
     }
 }

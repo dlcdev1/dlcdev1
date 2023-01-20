@@ -51,7 +51,7 @@ public class PeriodController {
         if (validateMesAntYear(attr, MES, YEAR)) {
             getFlashAttributesMessages(attr, FAIL.getMessage(), FAIL.getMessage());
         } else {
-            service.update(timeSource);
+            service.add(timeSource);
             getFlashAttributesMessages(attr, SUCCESS.getMessage(), CADASTRADO.getMessage());
         }
 

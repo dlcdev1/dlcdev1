@@ -37,9 +37,9 @@ public class TimeSource {
     @Column(nullable = false)
     private String mesYear;
 
-    @Column(name = "due_date")
+    @Column(name = "creat_at")
     @DateTimeFormat(pattern = "dd-MM-YYYY")
-    private LocalDate dueDate;
+    private LocalDate creatAt;
 
     @OneToMany(mappedBy = "timeSource")
     private Set<Bill> bills;

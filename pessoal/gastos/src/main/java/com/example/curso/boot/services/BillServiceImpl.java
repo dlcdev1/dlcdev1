@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.lang.Integer.sum;
+
 @Slf4j
 @Service
 public class BillServiceImpl implements BillService {
@@ -56,6 +58,11 @@ public class BillServiceImpl implements BillService {
                 .billList(result).build();
     }
 
+    //todo: resolver conta dos valores
+
+//    private static BigDecimal getTotal(List<Bill> result) {
+//        int sum = result.forEach();
+//    }
     private static BigDecimal getWageByBills(List<Bill> result) {
 
         try {
@@ -73,6 +80,8 @@ public class BillServiceImpl implements BillService {
         Long timerSourceId = getTimerSourceId(billByTimeSource);
 
         BigDecimal resultWage = getWageByBills(billByTimeSource);
+
+
 
         return BillDto.builder()
                 .wage(resultWage)

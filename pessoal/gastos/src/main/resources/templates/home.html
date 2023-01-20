@@ -93,7 +93,7 @@
                 <th>#</th>
                 <td th:text="${#aggregates.sum(bill.billList.![value])}">Valor</td>
 
-                <td>-444</td>
+                <td th:text="${#aggregates.avg(bill.billList.![value])}">Pago</td>
                 <form th:action="@{/debtors/salvar}" method="post" th:object="${debtors}">
                     <td>
                         <input name="timeSource" text="text" id="timeSource"
