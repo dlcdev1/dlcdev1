@@ -1,1 +1,0 @@
-New courses Java training
